@@ -10,11 +10,9 @@ class Main {
     static boolean isPositiveDigit(String str, int idx) {
         return str.charAt(idx)>'0' && str.charAt(idx)<='9';
     }
-    
-    static boolean isAlpha(String str, int lastIdx) {
-        int ten = str.charAt(lastIdx-1)-'0';
-        int num = 10*ten+(str.charAt(lastIdx)-'0');
-        return ten>0 && num>=1 && num<=26;
+
+    static boolean canDecode(String str, int lastIdx) {
+        return str.charAt(lastIdx-1)=='1' || str.charAt(lastIdx-1)=='2' && str.charAt(lastIdx)>='0' && str.charAt(lastIdx)<='6';
     }
     
     public static void main(String[] args) throws Exception {
@@ -26,7 +24,7 @@ class Main {
             if (isPositiveDigit(input, i-1)) {
                 counts[i] += counts[i-1];
             }
-            if (i>=2 && isAlpha(input, i-1)) {
+            if (i>=2 && canDecode(input, i-1)) {
                 counts[i] += counts[i-2];
             }
             counts[i]%=MOD;
