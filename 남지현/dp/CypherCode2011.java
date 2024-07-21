@@ -12,7 +12,7 @@ class Main {
     }
 
     static boolean canDecode(String str, int lastIdx) {
-        return str.charAt(lastIdx-1)=='1' || str.charAt(lastIdx-1)=='2' && str.charAt(lastIdx)>='0' && str.charAt(lastIdx)<='6';
+        return str.charAt(lastIdx-1)=='1' || str.charAt(lastIdx-1)=='2' && str.charAt(lastIdx)<='6';
     }
     
     public static void main(String[] args) throws Exception {
