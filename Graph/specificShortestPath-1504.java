@@ -82,4 +82,13 @@ class Main {
             
             for(int[] edge : edges.get(curr[0])) {
                 int cost = curr[1] + edge[1];
+                
+                if(dist[edge[0]] <= cost)
+                    continue;
 
+                dist[edge[0]] = cost;
+                pq.add(new int[] {edge[0], cost});
+            }
+        }
+    }
+}
