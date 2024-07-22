@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+// A와 B2(골드 5)
 // 1. 무작정 재귀 돌리면 시간 초과난다(O(N^2))
 // 2. T의 길이를 줄이며 S와 같은지 확인하는 방법으로 해결하자!
 public class BaekJoon12919 {
