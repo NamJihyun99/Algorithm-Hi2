@@ -25,7 +25,7 @@
 
 ## 😸 Github Rule
 - 본인이름/폴더구조 생성 후, 풀이 코드 제출 (이름 폴더 이하 구조는 각자 취향에 맞게)<br/>
-    ex) 이주은/Greedy/prob1.java
+    ex) 이주은/Greedy/문제이름.java
 - 커밋 메시지 말머리는 ps, refactor, docs로 통일. 그 밖의 경우에는 자유롭게.<br/>
     ex) ps: 백준 1931번 회의실 배정
 <br/>
