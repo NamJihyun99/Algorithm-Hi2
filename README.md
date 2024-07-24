@@ -34,4 +34,4 @@
 |주차|문제집(링크)|
 |:--:|:--:|
 |1주차|[BOJ 2011번: 암호코드](https://www.acmicpc.net/problem/2011)<br/>[BOJ 12919번: A와 B 2](https://www.acmicpc.net/problem/12919)<br/>[BOJ 1504번: 특정한 최단 경로](https://www.acmicpc.net/problem/1504)<br/>[BOJ 1005번: ACM Craft](https://www.acmicpc.net/problem/1005)<br/>[프로그래머스: 길 찾기 게임](https://school.programmers.co.kr/learn/courses/30/lessons/42892)|
-2주차|[BOJ 2493 탑](https://www.acmicpc.net/problem/2493)<br/>[BOJ 소형 기관차 2616번](https://www.acmicpc.net/problem/2616)<br/>[BOJ 15900번 나무 탈출](https://www.acmicpc.net/problem/15900)<br/>[BOJ 1012번 유기농 배추](https://www.acmicpc.net/problem/1012)<br/>[BOJ 11559번 뿌요뿌요](https://www.acmicpc.net/problem/15900)|
+2주차|[BOJ 2493 탑](https://www.acmicpc.net/problem/2493)<br/>[BOJ 소형 기관차 2616번](https://www.acmicpc.net/problem/2616)<br/>[BOJ 15900번 나무 탈출](https://www.acmicpc.net/problem/15900)<br/>[BOJ 1012번 유기농 배추](https://www.acmicpc.net/problem/1012)<br/>[BOJ 11559번 뿌요뿌요](https://www.acmicpc.net/problem/11559)|
