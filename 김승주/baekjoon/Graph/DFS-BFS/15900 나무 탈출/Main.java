@@ -1,4 +1,4 @@
-// /15900-2f3bb8aa298643baa592c7ec1cfdaaa4?pvs=4
+// https://www.notion.so/15900-2f3bb8aa298643baa592c7ec1cfdaaa4?pvs=4
 
 import java.util.*;
 import java.io.*;
