@@ -22,7 +22,7 @@ class Solution {
     }
     
     private void divide(Node node, int amount) {
-        if (node.parent == null) {
+        if (node.parent == null || amount == 0) {
             node.count += amount;
             return;
         }
