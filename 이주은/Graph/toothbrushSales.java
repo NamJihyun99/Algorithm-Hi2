@@ -15,7 +15,6 @@ class Solution {
         for(int i=0; i<N; i++) {
             Node p = map.get(referral[i]);
             Node c = new Node(p);
-            p.childs.add(c);
             map.put(enroll[i], c);
         }
         
@@ -48,13 +47,9 @@ class Node {
     int profit;
     int amount;
     Node parent;
-    List<Node> childs;
-    
-    String name;
     
     Node(Node parent) {
         this.parent = parent;
-        childs = new ArrayList<>();
         
         profit = 0;
         amount = 0;
