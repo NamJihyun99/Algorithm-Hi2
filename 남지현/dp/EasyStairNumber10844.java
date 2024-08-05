@@ -28,8 +28,7 @@ class Main {
         long sum = 0;
         for (int i=0; i<10; i++) {
             sum+=dp[N][i];
-            sum%=MOD;
         }
-        System.out.println(sum);
+        System.out.println(sum % MOD);
     }
 }
