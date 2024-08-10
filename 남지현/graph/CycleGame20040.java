@@ -26,7 +26,6 @@ class Main {
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         parent = new int[n];
-        int count = 0; 
         int answer = 0;
         for(int i=0; i<n; i++) {
             parent[i] = i;
