@@ -1,4 +1,4 @@
-//백준 14889번 스타트와 링크
+//백준 14889번 스타트와 링크(https://www.acmicpc.net/problem/14889)
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
