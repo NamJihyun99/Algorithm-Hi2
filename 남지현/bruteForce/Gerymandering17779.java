@@ -10,7 +10,7 @@ class Main {
     static int[][] A;
     static boolean[][] border;
 
-    static int MAX = 21*21*101;
+    static final int MAX = 21*21*101;
 
     private static void mark() {
         border = new boolean[N+1][N+1];
