@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 // 부분 합(골드 4)
 // 1. 71%에서 실패
 // 2. 75%에서 실패 -> 중간중간 return
-public class Main {
+public class BaekJoon1806 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
