@@ -1,79 +1,80 @@
-import java.util.*;
-import java.io.*;
-
-class Main {
-    static int N;
-    static int[] A;
-    static int[] dp;
-    static int prevIdx = 0;
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        A = new int[N];
-        dp = new int[N];
-        StringTokenizer st = new StringTokenizer(br.readLine());    
-        boolean isIncreasing = true;
-        for (int i = 0; i < N; i++) {
-            A[i] = Integer.parseInt(st.nextToken());
-            if (i == 0) {
-                dp[0] = 1;
-                continue;
-            } else if (i == 1 && A[1] < A[0]) {
-                isIncreasing = false;
-            }
-            isIncreasing = bitonic(i, isIncreasing);
-        }
-        System.out.println(dp[N - 1]);
-    }
-    private static boolean bitonic(int currIdx, boolean isIncreasing) {
-        if (A[currIdx] > A[prevIdx]) {
-            if (isIncreasing) {
-                prevIdx = currIdx;
-                dp[currIdx] = dp[currIdx - 1] + 1;
-                return true;
-            } else { // 감소하고 있었는데 증가하는 수를 만난 경우
-                // 이전까지의 수 중 현재 수를 포함하는 새로운 바이토닉 수열의 최대 길이 
-                int newLength = findIncreasingOrDecreasingSubset(currIdx, true);
-                if (newLength > dp[currIdx - 1]) {
-                    prevIdx = currIdx;
-                    dp[currIdx] = newLength;
-                    return true;
-                } else {
-                    dp[currIdx] = dp[currIdx - 1];
-                    return false;
-                }
-            }
-        } else if (A[currIdx] < A[prevIdx]) {
-            prevIdx = currIdx;
-            if (isIncreasing) { // 증가하고 있었는데 감소하는 수를 만난 경우
-                // 이전까지의 수 중 현재 수를 포함하는 감소하는 수열의 최대 길이 vs 현재까지의 바이토닉 수열의 길이 + 1
-                int newLength = findIncreasingOrDecreasingSubset(currIdx, false);
-                if (newLength > dp[currIdx - 1] + 1) {
-                    dp[currIdx] = newLength;
-                } else {
-                    dp[currIdx] = dp[currIdx - 1] + 1;
-                }
-            } else {
-                dp[currIdx] = dp[currIdx - 1] + 1;
-            }
-            return false;
-        } else {
-            dp[currIdx] = dp[currIdx - 1];
-            return isIncreasing;
-        }
-    }
-
-    private static int findIncreasingOrDecreasingSubset(int end, boolean isIncreasing) {
-        if (end == 0) {
-            return 1;
-        }
-        int max = 0;
-            for (int i = end - 1; i >= -1; i--) {
-                if (i == -1)    max = Math.max(max, 1);
-                else if ((A[i] < A[end] && isIncreasing) || (A[i] > A[end] && !isIncreasing)) {
-                    max = Math.max(findIncreasingOrDecreasingSubset(i, isIncreasing) + 1, max);
-                }
-            }
-            return max;
-    }
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+ 
+public class Main {
+	
+	static int N;
+	static int[] seq;
+	static int[] r_dp;
+	static int[] l_dp;
+	
+	public static void main(String[] args) throws IOException {
+ 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+ 
+		N = Integer.parseInt(br.readLine());
+		
+		r_dp = new int[N];	// LIS
+		l_dp = new int[N];	// LDS
+		seq = new int[N];
+		
+ 
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+ 
+		for (int i = 0; i < N; i++) {
+			seq[i] = Integer.parseInt(st.nextToken());
+		}
+ 
+		LIS();
+		LDS();
+		
+		int max = 0;
+		for(int i = 0; i < N; i++) {
+			if(max < r_dp[i] + l_dp[i]) {
+				max = r_dp[i] + l_dp[i];
+			}
+		}
+ 
+		System.out.println(max - 1);
+	}
+ 
+	
+	
+	static void LIS() {
+ 
+		for(int i = 0; i < N; i++) {
+			r_dp[i] = 1;
+		    
+			// 0 ~ i 이전 원소들 탐색
+			for(int j = 0; j < i; j++) {
+		    
+				// j번째 원소가 i번째 원소보다 작으면서 i번째 dp가 j번째 dp+1 값보다 작은경우
+				if(seq[j] < seq[i] && r_dp[i] < r_dp[j] + 1) {
+					r_dp[i] = r_dp[j] + 1;	// j번째 원소의 +1 값이 i번째 dp가 된다.
+				}
+			}
+		}
+	}
+ 
+ 
+	
+	static void LDS() {
+ 
+		// 뒤에서부터 시작 
+		for (int i = N - 1; i >= 0; i--) {
+			l_dp[i] = 1;
+			
+			// 맨 뒤에서 i 이전 원소들을 탐색 
+			for (int j = N - 1; j > i; j--) {
+				
+				// i번째 원소가 j번째 원소보다 크면서 i번째 dp가 j번째 dp+1 값보다 작은경우 
+				if (seq[j] < seq[i] && l_dp[i] < l_dp[j] + 1) {
+					l_dp[i] = l_dp[j] + 1;	// j번쨰 원소의 +1이 i번쨰 dp값이 됨
+				}
+			}
+		}
+	
+	}
 }
