@@ -51,7 +51,7 @@ class Main {
         dfs(1, 0);
         visited[1]=false;
         visited[farthestNode] = true;
-        dfs(fartestNode, 0);
+        dfs(farthestNode, 0);
         System.out.println(answer);
     }
 }
