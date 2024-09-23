@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 // 가장 긴 바이토닉 부분 수열
-public class Main {
+public class BaekJoon11054 {
 	static int[] arr;
 	static int n;
 	static int[] lis_dp;
