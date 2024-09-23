@@ -11,7 +11,6 @@ class Solution {
             String v = terms[i].substring(2);
             map.put(t, v);
         }
-        
         int todayD = calc(today);
     
         int len = privacies.length;
