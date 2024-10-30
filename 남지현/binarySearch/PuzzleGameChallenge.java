@@ -3,7 +3,7 @@ import java.util.*;
 // 프로그래머스 - 퍼즐 게임 챌린지
 
 class Solution {
-    static final long MAX = 3_000_000_0000L;
+    static final long MAX = 3_000_000_000L;
     
     public long solution(int[] diffs, int[] times, long limit) {
         long mid = -1;
