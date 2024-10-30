@@ -10,6 +10,7 @@ class Solution {
         int now = convertStringToSeconds(pos);
         int start = convertStringToSeconds(op_start);
         int end = convertStringToSeconds(op_end);
+      
         int idx = 0;
       
         do {
