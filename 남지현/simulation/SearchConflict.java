@@ -18,13 +18,18 @@ class Solution {
             }
         }
         int answer = 0; 
-        while (!finished()) {
+        while (true) {
+            boolean finished = true;
             Map<Point, Integer> pointCount = new HashMap<>();
             for (int i = 0; i < robotsNum; i++) {
                 if (!queues[i].isEmpty()) {
+                    finished = false;
                     Point point = queues[i].pollFirst();
                     pointCount.put(point, pointCount.getOrDefault(point, 0)+1);
                 }
+            }
+            if (finished) {
+                break;
             }
             for (Map.Entry<Point, Integer> entry : pointCount.entrySet()) {
                 if (entry.getValue() > 1) {
@@ -33,15 +38,6 @@ class Solution {
             }
         }
         return answer;
-    }
-    
-    private boolean finished() {
-        for (ArrayDeque<Point> queue : queues) {
-            if (!queue.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
     }
     
     private void addRoute(int num, int[] dep, int[] dst) {
