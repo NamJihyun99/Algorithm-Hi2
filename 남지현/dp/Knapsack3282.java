@@ -3,7 +3,7 @@ import java.io.*;
 
 // SWEA 3282번 0/1 Knapsack
 
-class Main {
+class Solution {
     
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,11 +21,12 @@ class Main {
                 V[i] = Integer.parseInt(st.nextToken());
                 C[i] = Integer.parseInt(st.nextToken());
             }
-            for (int i=0; i<N; i++) {
+            for (int j=0; j<=K; j++) {
+                if (j>=V[0]) dp[0][j] = C[0];
+            }
+            for (int i=1; i<N; i++) {
                 for (int j=0; j<=K; j++) {
-                    if (i==0) {
-                        if (j>=V[0]) dp[i][j] = C[0];
-                    } else if (j >= V[i]) {
+                    if (j >= V[i]) {
                         dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-V[i]]+C[i]);
                     } else {
                         dp[i][j] = dp[i-1][j];
