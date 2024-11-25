@@ -8,16 +8,16 @@ class Solution {
         String[] tokens = Integer.toString(n, k).split("0");
         int count = 0;
         for (String token: tokens) {
-            if (token.length()>0 && isPrime(Long.valueOf(token))) {
+            if (token.length()>0 && isPrime(Long.parseLong(token))) {
                 count++;
             }
         }
         return count;
     }
     
-    private boolean isPrime(Long number) {
+    private boolean isPrime(long number) {
         if (number <= 1L) return false;
-        for (Long i=2L; i<=Math.sqrt(number); i++) {
+        for (long i=2L; i<=Math.sqrt(number); i++) {
             if (number%i == 0) return false;
         }
         return true;
