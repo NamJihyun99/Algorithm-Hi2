@@ -21,10 +21,6 @@ class Solution {
     
     private int numberOfOne(long bits) {
         String binaryString = Long.toString(bits, 2);
-        int count = 0;
-        for (int i=0; i<binaryString.length(); i++) {
-            if (binaryString.charAt(i) == '1') count++;
-        }
-        return count;
+        return binaryString.length() - binaryString.replace("1","").length();
     }
 }
