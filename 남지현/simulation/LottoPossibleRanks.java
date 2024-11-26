@@ -14,13 +14,7 @@ class Solution {
         for (int number: win_nums) {
             win |= 1L<<number;
         }
-        int matched = numberOfOne(lotto&win);
-        int max = Math.min(unknown, 6-matched);
-        return new int[]{rank[matched+max], rank[matched]};
-    }
-    
-    private int numberOfOne(long bits) {
-        String binaryString = Long.toString(bits, 2);
-        return binaryString.length() - binaryString.replace("1","").length();
+        int matched = Long.bitCount(lotto&win);
+        return new int[]{rank[matched+unknown], rank[matched]};
     }
 }
