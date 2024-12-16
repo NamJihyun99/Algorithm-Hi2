@@ -3,11 +3,9 @@
 import java.util.*;
 import java.io.*;
 
-class Main {
-    static final int INF = 1_000_000_0;
-    
+class Main {    
     static int F, S, G, U, D;
-    static int[] dp; //dp[i]는 i번째 층에 도착하기 위해 버튼을 누른 최소 횟수
+    static int[] visited; //visted[i]는 i번째 층에 도착하기 위해 버튼을 누른 최소 횟수
     
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,42 +17,40 @@ class Main {
         U = Integer.parseInt(st.nextToken());
         D = Integer.parseInt(st.nextToken());
 
-        dp = new int[F+1];
-        for(int i=1; i<=F; i++) {
-            dp[i] = INF;
+        if(S == G) {
+            System.out.println(0);
+            return;
         }
+        
+        visited = new int[F+1];
         
         Queue<int[]> queue = new ArrayDeque<>();
         queue.add(new int[] {S, 0}); //[층, 횟수];
-        dp[S] = 0;
 
         while(!queue.isEmpty()) {
             int[] now = queue.poll();
 
             if(now[0] == G)
                 break;
-            
-            if(dp[now[0]] < now[1])
-                continue;
 
             //위로
             int up = now[0] + U;
-            if(up <= F && dp[up] > now[1] + 1) {
-                dp[up] = now[1] + 1;
-                queue.add(new int[] {up, now[1]+1});
+            if(up <= F && visited[up] == 0) {
+                visited[up] = now[1] + 1;
+                queue.add(new int[] {up, visited[up]});
             }
 
             //아래로
             int down = now[0] - D;
-            if(down > 0 && dp[down] > now[1] + 1) {
-                dp[down] = now[1] + 1;
-                queue.add(new int[] {down, now[1]+1});
+            if(down > 0 && visited[down] == 0) {
+                visited[down] = now[1] + 1;
+                queue.add(new int[] {down, visited[down]});
             }
         }
 
-        if(dp[G] == INF)
+        if(visited[G] == 0)
             System.out.print("use the stairs");
         else
-            System.out.print(dp[G]);
+            System.out.print(visited[G]);
     }
 }
