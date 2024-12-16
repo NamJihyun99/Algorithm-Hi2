@@ -10,27 +10,26 @@ class Solution {
     public String[] solution(String[] orders, int[] course) {
         this.course = course;
         StringBuilder sb = new StringBuilder();
-    
+        
         for(int i=0; i<orders.length; i++) {
             char[] order = orders[i].toCharArray();
             Arrays.sort(order);
             
             sb.setLength(0);
             comb(sb, order, 0);
-            
-            //System.out.println(Arrays.toString(order));
         }        
         
         List<String> list = new ArrayList<>();
-        for(Map.Entry<String, Integer> entry : map.entrySet()) {
-            if(entry.getValue() < 2)
+        for(int cnt : course) {
+            if(max[cnt] < 2)
                 continue;
             
-            for(int cnt : course) {
-                if(entry.getKey().length() == cnt && entry.getValue() == max[cnt]) {
-                    list.add(entry.getKey());
-                    break;
-                }
+            for(Map.Entry<String, Integer> entry : map.entrySet()) {
+                if(entry.getKey().length() != cnt || entry.getValue() != max[cnt])
+                    continue;
+
+                list.add(entry.getKey());
+                continue;
             }
         }
         
@@ -45,12 +44,13 @@ class Solution {
     
     private void comb(StringBuilder sb, char[] order, int idx) {
         if(idx == order.length) {
-            //System.out.println(sb);
             
-            int value = map.getOrDefault(sb.toString(), 0) + 1;
-            map.put(sb.toString(), value);
-            
-            max[sb.length()] = Math.max(value, max[sb.length()]);
+            if(sb.length() >= 2) {
+                int value = map.getOrDefault(sb.toString(), 0) + 1;
+                map.put(sb.toString(), value);
+
+                max[sb.length()] = Math.max(value, max[sb.length()]);
+            }
             
             return;
         }
