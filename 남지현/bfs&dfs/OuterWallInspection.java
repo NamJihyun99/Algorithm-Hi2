@@ -44,9 +44,9 @@ class Solution {
         }
         if (depth == end) {
             List<Integer> intervals = sortedIntervals();
-            boolean success = true;
             // 투입 구간 개수가 친구 수보다 많으면 불가능
             if (dists.length >= intervals.size()) {
+                boolean success = true;
                 for (int i=0; i<intervals.size(); i++) {
                     if (dists[dists.length-i-1] < intervals.get(i)) {
                         success = false;
