@@ -78,10 +78,8 @@ class Solution {
             } else {
                 sum += gaps[i];
                 if (i == gaps.length-1) { // 마지막 취약점과 첫번째 취약점 사이의 gap을 연결
-                    if (distances.size()>0) {
                     distances.add(1, distances.get(0)+sum);
                     distances.remove(0);
-                    }
                 }
             }
         }
