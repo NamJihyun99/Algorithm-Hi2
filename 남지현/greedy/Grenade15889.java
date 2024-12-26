@@ -21,15 +21,14 @@ class Main {
         }
         st = new StringTokenizer(br.readLine());
         boolean result = false;
-        int left = 0, right = 0;
+        int end = 0;
         for (int i=0; i<N-1; i++) {
             int dist = Integer.parseInt(st.nextToken());
-            if (point[i] > right) {
+            if (point[i] > end) {
                 break;
-            } else {
-                right = Math.max(right, point[i]+dist);
-            }
-            if (right >= point[N-1]) {
+            } 
+            end = Math.max(end, point[i]+dist);
+            if (end >= point[N-1]) {
                 result = true;
                 break;
             }
