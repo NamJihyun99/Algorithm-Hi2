@@ -57,26 +57,26 @@ public class Main {
         int L = (int) Math.pow(2, H); // 리프 노드의 개수 : 2^H
         int N = 2*L-1; // 총 노드의 개수 : 2^(H+1)-1
         // parent 노드 연결
-        List<Node> CBT = new ArrayList<>(N);
+        List<Node> FBT = new ArrayList<>(N);
         for (int i=0; i<N; i++) {
-            CBT.add(new Node(i));
+            FBT.add(new Node(i));
             if (i==0) continue;
-            CBT.get(i).parent = CBT.get((i-1)/2);
+            FBT.get(i).parent = FBT.get((i-1)/2);
         }
         // 리프노드 업무 분담
         for (int i=L-1; i<N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j=0; j<K; j++) {
                 if (j%2==0) 
-                    CBT.get(i).left.addLast(Integer.parseInt(st.nextToken()));
+                    FBT.get(i).left.addLast(Integer.parseInt(st.nextToken()));
                 else 
-                    CBT.get(i).right.addLast(Integer.parseInt(st.nextToken()));
+                    FBT.get(i).right.addLast(Integer.parseInt(st.nextToken()));
             }
         }
         time = 1;
         for (; time<=R; time++) {
             for (int i=0; i<N; i++) {
-                CBT.get(i).work();
+                FBT.get(i).work();
             }
         }
         System.out.println(sum);
