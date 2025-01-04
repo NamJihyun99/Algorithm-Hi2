@@ -1,75 +1,103 @@
 import java.io.*;
-import java.util.*;
 
-public class Main {
-	static int N, M;
-	static int[][] p;
-	static boolean[][] visit;
-	static int answer = 0;
+class Main {
+	static int maxScore = 0;
+	static int N;
+	static int M;
+	static int[][] paper;
+	static boolean[][] visited;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input = br.readLine().split(" ");
+		N = Integer.parseInt(input[0]);
+		M = Integer.parseInt(input[1]);
+		paper = new int[N][M];
+		visited = new boolean[N][M];
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		boolean hasZero = false;
+		for (int i = 0; i < N; i++) {
+			String row = br.readLine();
+			for (int j = 0; j < M; j++) {
+				paper[i][j] = Integer.parseInt(row.substring(j, j + 1));
+				if (paper[i][j] == 0 && (i == 0 || j == 0)) {
+					hasZero = true;
+				}
+			}
+		}
 
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		p = new int[N][M];
-		visit = new boolean[N][M];
-
-		for(int i=0;i<N;i++) {
-			String input = br.readLine();
-			for(int j=0;j<M;j++)
-				p[i][j] = input.charAt(j) - '0';
+		if (hasZero) {
+			findMaxScore(0);
+		} else {
+			if (N < M) {
+				maxScore = cutHorizontally();
+			} else if (N > M) {
+				maxScore = cutVertically();
+			} else {
+				maxScore = Math.max(cutHorizontally(), cutVertically());
+			}
 		}
 		
-		DFS(0, 0, 0);
-		System.out.println(answer);
+		System.out.println(maxScore);
 	}
 
-	static void DFS(int depth, int num, int sum) {
-		if(depth == N*M) {
-			answer = Math.max(sum, answer);
-			return;
-		}
+	private static void findMaxScore(int currScore) {
+		for (int row = 0; row < N; row++) {
+			for (int col = 0; col < M; col++) {
+				if (paper[row][col] == 0 || visited[row][col]) {
+					continue;
+				}
 
-		int r = depth / M;
-		int c = depth % M;
+				// paper[row][col]부터 시작해 세로로 자르기
+				int temp = 0;
+				int idx = row;
+				for (; idx < N && !visited[idx][col]; idx++) {
+					visited[idx][col] = true;
+					temp = temp * 10 + paper[idx][col];
+					findMaxScore(currScore + temp);
+				}
+				for (--idx ; idx >= row + 1; idx--) {
+					visited[idx][col] = false;
+				}
 
-		if(visit[r][c]) {
-			DFS(depth + 1, num, sum);
-		}
-		else {
-			visit[r][c] = true;
-			num = num * 10 + p[r][c];
-			DFS(depth + 1, 0, sum + num);
+				// paper[row][col]부터 시작해 가로로 자르기
+				temp = paper[row][col];
+				idx = col + 1;
+				for (; idx < M && !visited[row][idx]; idx++) {
+					visited[row][idx] = true;
+					temp = temp * 10 + paper[row][idx];
+					findMaxScore(currScore + temp);
+				}
+				for (--idx; idx >= col; idx--) {
+					visited[row][idx] = false;
+				}
 
-			int i, temp = num;
-			for(i=r+1;i<N;i++) {
-				if(visit[i][c])
-					break;
-
-				visit[i][c] = true;
-				temp = temp * 10 + p[i][c];
-				DFS(depth + 1, 0, sum + temp);
+				return;
 			}
-			
-			for(int j=r+1;j<i;j++)
-				visit[j][c] = false;
-			
-			temp = num;
-			for(i=c+1;i<M;i++) {
-				if(visit[r][i])
-					break;
-				visit[r][i] = true;
-				temp = temp * 10 + p[r][i];
-				DFS(depth + i - c + 1, 0, sum + temp);
-			}
-
-			for(int j=c+1;j<i;j++)
-				visit[r][j] = false;
-			
-			visit[r][c] = false;
 		}
+		maxScore = Math.max(maxScore, currScore);
 	}
 
+	private static int cutHorizontally() {
+		int sum = 0;
+		for (int row = 0; row < N; row++) {
+			int temp = 0;
+			for (int col = 0; col < M; col++) {
+				temp = temp * 10 + paper[row][col];
+			}
+			sum += temp;
+		}
+		return sum;
+	}
+
+	private static int cutVertically() {
+		int sum = 0;
+		for (int col = 0; col < M; col++) {
+			int temp = 0;
+			for (int row = 0; row < N; row++) {
+				temp = temp * 10 + paper[row][col];
+			}
+			sum += temp;
+		}
+		return sum;
+	}
 }
