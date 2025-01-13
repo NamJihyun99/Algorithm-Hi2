@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Map.Entry;
 
 class Solution {
     static int answer = 0;
@@ -7,63 +8,41 @@ class Solution {
         for (String word : words) {
             Node curr = root;
             for (int i = 0; i < word.length(); i++) {
-                boolean flag = false;
-                for (Node child : curr.children) {
-                    if (child.letter == word.charAt(i)) {
-                        if (i == word.length() - 1) {
-                            child.isEnd = true;
-                        }
-                        child.count++;
-                        flag = true;
-                        curr = child;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    Node child = new Node(word.charAt(i));
-                    if (i == word.length() - 1) {
-                        child.isEnd = true;
-                    }
-                    curr.children.add(child);
-                    curr = child;
-                }
+                curr.children.putIfAbsent(word.charAt(i), new Node());
+                curr = curr.children.get(word.charAt(i));
+                curr.count++;
             }
+            curr.isEnd = true;
         }
-        for (Node start : root.children) {
-            traverse(start, 1);
+        for (Entry<Character, Node> entry : root.children.entrySet()) {
+            traverse(entry.getValue(), 1);
         }
         return answer;
     }
     
-    private static void traverse(Node curr, int num) {
-        if (curr.isEnd) {
+    private static void traverse(Node node, int num) {
+        if (node.isEnd) {
             answer += num;
         }
-        if (!curr.isEnd && curr.count == 1) {
+        if (!node.isEnd && node.count < 2) {
             answer += num;
             return;
         }
-        for (Node next : curr.children) {
-            traverse(next, num + 1);
+        
+        for (Entry<Character, Node> entry : node.children.entrySet()) {
+            traverse(entry.getValue(), num + 1);
         }
     }
     
     static class Node {
-        char letter;
-        List<Node> children;
-        int count;
+        Map<Character, Node> children;
         boolean isEnd;
+        int count;
         
-        Node(char letter) {
-            this.letter = letter;
-            this.children = new ArrayList<>();
-            this.count = 1;
-            this.isEnd = false;
-        }
         Node() {
-            this.children = new ArrayList<>();
-            this.count = 0;
+            this.children = new HashMap<>();
             this.isEnd = false;
+            this.count = 0;
         }
     }
 }
