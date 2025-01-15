@@ -24,7 +24,7 @@ class Main {
                     if (board[k/M][k%M] != 0) continue;
                     board[k/M][k%M] = 1;
                     visited = new boolean[N][M];
-                    count = 0;
+                    count = 0; // 바이러스가 퍼진 영역의 개수
                     for (int[] pt : virus) {
                         dfs(pt[0], pt[1]);
                     }
