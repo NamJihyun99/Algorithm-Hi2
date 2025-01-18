@@ -28,43 +28,37 @@ class Main {
             }
         }
 
-        dfs(map, 0, 0, 0, 3);
+        dfs(map, 0, 0, 3);
         System.out.println(maxSafetyZone);
     }
 
-    private static void dfs(int[][] status, int row, int col, int sequence, int leftWalls) {
+    private static void dfs(int[][] status, int row, int col, int leftWalls) {
         if (leftWalls == 0) {
             maxSafetyZone = Math.max(maxSafetyZone, spread(status));
             return;
         }
 
         for (int i = row; i < N; i++) {
-            for (int j = col; j < M; j++) {
+            for (int j = (row == i)? col : 0; j < M; j++) {
                 if (status[i][j] != 0) {
                     continue;
                 }
-                int k = (i == row && j == col)? sequence : 0;
-                for (; k < 4; k++) {
-                    int nRow = dx[k] + i;
-                    int nCol = dy[k] + j;
-                    if (nRow >= 0 && nRow < N && nCol >= 0 && nCol < M && status[nRow][nCol] == 0) {
-                        status[nRow][nCol] = 1;
-                        if (k == 3) {
-                            dfs(status, i, j, 0, leftWalls - 1);
-                        } else {
-                            dfs(status, i, j, k + 1, leftWalls - 1);
-                        }
-                        
-                        status[nRow][nCol] = 0;
-                        if (k == 3) {
-                            dfs(status, i, j, 0, leftWalls);
-                        } else {
-                            dfs(status, i, j, k + 1, leftWalls);
-                        }
-    
-                        return;
-                    }
+
+                status[i][j] = 1;
+                if (j + 1 == M) {
+                    dfs(status, i + 1, 0, leftWalls - 1);
+                } else {
+                    dfs(status, i, j + 1, leftWalls - 1);
                 }
+
+                status[i][j] = 0;
+                if (j + 1 == M) {
+                    dfs(status, i + 1, 0, leftWalls);
+                } else {
+                    dfs(status, i, j + 1, leftWalls);
+                }
+
+                return;
             }
         }
     }
