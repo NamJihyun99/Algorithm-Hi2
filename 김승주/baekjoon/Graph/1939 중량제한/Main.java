@@ -8,9 +8,7 @@ class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        int left = 1;
-        int right = 1;
-
+        int left = 1, right = 1;
         List<Island>[] graph = new List[N + 1];
         for (int i = 1; i <= N; i++) {
             graph[i] = new ArrayList<>();
@@ -21,18 +19,21 @@ class Main {
             int A = Integer.parseInt(st.nextToken());
             int B = Integer.parseInt(st.nextToken());
             int C = Integer.parseInt(st.nextToken());
-
             graph[A].add(new Island(B, C));
             graph[B].add(new Island(A, C));
             right = Math.max(right, C);
+        }
+
+        // 그래프 간선 정렬 (가중치 기준 내림차순)
+        for (int i = 1; i <= N; i++) {
+            graph[i].sort((a, b) -> b.weight - a.weight);
         }
 
         st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-
-        while (left <= right) { 
+        while (left <= right) {
             int mid = (left + right) / 2;
             if (bfs(graph, N, start, end, mid)) {
                 left = mid + 1;
@@ -45,12 +46,13 @@ class Main {
     }
 
     private static boolean bfs(List<Island>[] graph, int N, int start, int end, int target) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        Queue<Integer> queue = new LinkedList<>();
         boolean[] visited = new boolean[N + 1];
-        pq.offer(start);
+        queue.offer(start);
+        visited[start] = true;
 
-        while (!pq.isEmpty()) {
-            int curr = pq.poll();
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
             if (curr == end) {
                 return true;
             }
@@ -58,7 +60,7 @@ class Main {
             for (Island neighbor : graph[curr]) {
                 if (!visited[neighbor.num] && neighbor.weight >= target) {
                     visited[neighbor.num] = true;
-                    pq.offer(neighbor.num);
+                    queue.offer(neighbor.num);
                 }
             }
         }
@@ -70,7 +72,7 @@ class Main {
         int num;
         int weight;
 
-        Island (int num, int weight) {
+        Island(int num, int weight) {
             this.num = num;
             this.weight = weight;
         }
