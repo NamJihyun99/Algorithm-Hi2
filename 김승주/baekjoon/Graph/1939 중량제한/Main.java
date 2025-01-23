@@ -8,6 +8,9 @@ class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
+        int left = 1;
+        int right = 1;
+
         List<Island>[] graph = new List[N + 1];
         for (int i = 1; i <= N; i++) {
             graph[i] = new ArrayList<>();
@@ -21,38 +24,46 @@ class Main {
 
             graph[A].add(new Island(B, C));
             graph[B].add(new Island(A, C));
+            right = Math.max(right, C);
         }
 
         st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        System.out.println(bfs(graph, N, start, end));
+
+        while (left <= right) { 
+            int mid = (left + right) / 2;
+            if (bfs(graph, N, start, end, mid)) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        System.out.println(right);
     }
 
-    private static int bfs(List<Island>[] graph, int N, int start, int end) {
-        int maxWeight = 0;
+    private static boolean bfs(List<Island>[] graph, int N, int start, int end, int target) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
         boolean[] visited = new boolean[N + 1];
-        Queue<Island> q = new LinkedList<>();
-        q.offer(new Island(start, Integer.MAX_VALUE));
-        visited[start] = true;
+        pq.offer(start);
 
-        while (!q.isEmpty()) {
-            Island curr = q.poll();
-            if (curr.num == end) {
-                maxWeight = Math.max(maxWeight, curr.weight);
-                continue;
+        while (!pq.isEmpty()) {
+            int curr = pq.poll();
+            if (curr == end) {
+                return true;
             }
 
-            for (Island neighbor : graph[curr.num]) {
-                if (!visited[neighbor.num]) {
+            for (Island neighbor : graph[curr]) {
+                if (!visited[neighbor.num] && neighbor.weight >= target) {
                     visited[neighbor.num] = true;
-                    q.offer(new Island(neighbor.num, Math.min(curr.weight, neighbor.weight)));
+                    pq.offer(neighbor.num);
                 }
             }
         }
 
-        return maxWeight;
+        return false;
     }
 
     static class Island {
