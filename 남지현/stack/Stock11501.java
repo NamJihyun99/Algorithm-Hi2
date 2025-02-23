@@ -17,12 +17,9 @@ class Main {
             }
             while (!stack.isEmpty()) {
                 Integer top = stack.pollLast();
-                Long count = 0l;
                 while (!stack.isEmpty() && stack.peekLast() <= top) {
-                    answer -= stack.pollLast();
-                    count++;
+                    answer = answer - stack.pollLast() + top;
                 }
-                answer += count*top;
             }
             sb.append(answer).append("\n");
         }
