@@ -11,8 +11,8 @@ class Main {
         N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
         H = Integer.parseInt(st.nextToken());
-        ladder = new int[H + 2][N + 2];
-        for (int i = 0; i <= H + 1; i++) {
+        ladder = new int[H + 1][N + 2];
+        for (int i = 0; i <= H ; i++) {
             for (int j = 0; j <= N + 1; j++) {
                 ladder[i][j] = j;
             }
@@ -43,7 +43,7 @@ class Main {
             }
             return;
         }
-        
+
         if (ladder[row][col] != col + 1 
                 && ladder[row][col - 1] != col && ladder[row][col + 1] != col + 2) {
             ladder[row][col] = col + 1;
