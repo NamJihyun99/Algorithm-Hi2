@@ -1,44 +1,51 @@
+import java.util.*;
+
 class Solution {
-    List<Integer> answer = new ArrayList<>();
+    static String binary;
+    static int[] answer;
+
     public int[] solution(long[] numbers) {
-        for (long num : numbers) {
-            String binary = Long.toBinaryString(num);
-            StringBuilder sb = new StringBuilder(binary).reverse();
-            while ((sb.length() + 1) & sb.length() != 0) {
-                sb.append('0');
+        answer = new int[numbers.length];
+        Arrays.fill(answer, 1);
+
+        for (int i = 0; i < numbers.length; i++) {
+            StringBuilder sb = new StringBuilder(Long.toBinaryString(numbers[i]));
+
+            while (((sb.length() + 1) & sb.length()) != 0) {
+                sb.insert(0, '0');
             }
-            makeBinaryTree(new Node(), sb.length() / 2, sb.toString());
+
+            binary = sb.toString();
+            makeBinaryTree(0, binary.length() - 1, i);
         }
+
+        return answer;
     }
-    private static Node makeBinaryTree(Node tree, int idx, String reversed) {
-        // idx가 2^n-1이면(== idx의 모든 비트가 1이면) 이전까지의 이진수로 포화 이진트리가 완성되었다는 뜻.
-        if (idx == 0) {
-            // 이진수의 트리 표현이 완료된 경우
-            if (idx >= reversed.length()) {
-                answer.add(1);
-                return;
-            }
-            if (reversed.charAt(idx) == '0') {
-                answer.add(0);
-                return;
-            }
-            Node next = new Node('1');
-            next.right = tree;
-            next.left = makeBinaryTree(null, idx + 1, reversed);
-            return next;
+
+    private static Node makeBinaryTree(int start, int end, int idx) {
+        if (start == end) {
+            return new Node(binary.charAt(start));
         }
-        
-        
-        
-        
+
+        int rootLoc = (start + end) / 2;
+        Node root = new Node(binary.charAt(rootLoc));
+
+        root.left = makeBinaryTree(start, rootLoc - 1, idx);
+        root.right = makeBinaryTree(rootLoc + 1, end, idx);
+
+        if (root.val == '0' && (root.left.val == '1' || root.right.val == '1')) {
+            answer[idx] = 0;
+        }
+
+        return root;
     }
-    
+
     static class Node {
         char val;
         Node left;
         Node right;
-        
-        Node (char val) {
+
+        Node(char val) {
             this.val = val;
         }
     }
