@@ -20,8 +20,9 @@ class Main {
             for (int j = 0; j < m; j++) {
                 arr[i][j] = input.charAt(j);
                 if (arr[i][j] == '1') {
-                    dp[i][j] = -1;
-                    makeMaxSquare(i, j);
+                    // dp[i][j] = -1;
+                    // makeMaxSquare(i, j);
+                    dp[i][j] = (i == 0 || j == 0)? 1 : Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1])) + 1;
                     answer = Math.max(answer, dp[i][j]);
                 } else {
                     dp[i][j] = 0;
@@ -33,10 +34,6 @@ class Main {
     }
 
     private static int makeMaxSquare(int row, int col) {
-        if (row < 0 || row >= n || col < 0 || col >= m) {
-            return 0;
-        }
-
         if (dp[row][col] == -1) {
             dp[row][col] = (row == 0 || col == 0)? 1 : Math.min(makeMaxSquare(row - 1, col), Math.min(makeMaxSquare(row, col - 1), makeMaxSquare(row - 1, col - 1))) + 1;
         }
