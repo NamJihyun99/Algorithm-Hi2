@@ -42,6 +42,7 @@ class Main {
         
         char[][] board = new char[N][M];
         Set<State> visited = new HashSet<>();
+        Queue<State> queue = new ArrayDeque<>();
         int rx=0, ry=0, bx=0, by=0;
         for (int i=0; i<N; i++) {
             board[i] = br.readLine().toCharArray();
