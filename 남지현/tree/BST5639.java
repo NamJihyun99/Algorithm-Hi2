@@ -4,6 +4,15 @@ import java.io.*;
 class Main {
     static StringBuilder sb;
 
+    static void postPrint(Node node) {
+        if (node == null) {
+            return;
+        }
+        postPrint(node.left);
+        postPrint(node.right);
+        sb.append(node.number).append("\n");
+    }
+
     static class Node {
         int number;
         Node left;
@@ -28,15 +37,6 @@ class Main {
                 }
             }
         }
-    }
-
-    static void postPrint(Node node) {
-        if (node == null) {
-            return;
-        }
-        postPrint(node.left);
-        postPrint(node.right);
-        sb.append(node.number).append("\n");
     }
     
     public static void main(String[] args) throws Exception {
